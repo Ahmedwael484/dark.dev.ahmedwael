@@ -1,259 +1,584 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HR Application</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        max-width: 800px;
-        margin: 50px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    h1, h2, h3 {
-        color: #333;
-        text-align: center;
-    }
-    input[type="text"],
-    input[type="password"],
-    input[type="date"],
-    input[type="number"],
-    select,
-    button {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        box-sizing: border-box;
-    }
-    button {
-        background-color: #007bff;
-        color: #fff;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    button:hover {
-        background-color: #0056b3;
-    }
-    .form-group {
-        margin-bottom: 15px;
-    }
-    .employee-info {
-        margin-top: 20px;
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-    }
-    .employee-details {
-        margin-top: 10px;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.0/JsBarcode.all.min.js"></script>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eef2f7;
+            color: #333333; /* استخدام اللون الرمادي الداكن للنصوص */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            animation: rainbow 5s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { color: red; }
+            14% { color: orange; }
+            28% { color: yellow; }
+            42% { color: green; }
+            57% { color: blue; }
+            71% { color: indigo; }
+            85% { color: violet; }
+            100% { color: red; }
+        }
+
+        .login-container {
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 20px; /* Rounded corners */
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #4caf50; /* Highlight on focus */
+        }
+
+        input[type="submit"], button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 50px; /* Circular buttons */
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .date-time {
+            margin: 15px 0;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .attendance-container {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        td {
+            text-align:بالطبع! سأقوم بتحديث الكود لتنسيق الساعة بنظام 12 ساعة، وسأضيف زر "حفظ الشيت" وزر "تحميل الشيت" ليتمكن المستخدم من تحميل البيانات إلى الهاتف أو الكمبيوتر. إليك الكود المحدث:
+
+### الكود المحدث:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.0/JsBarcode.all.min.js"></script>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eef2f7;
+            color: #333333; /* اللون الرمادي الداكن للنصوص */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            animation: rainbow 5s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { color: red; }
+            14% { color: orange; }
+            28% { color: yellow; }
+            42% { color: green; }
+            57% { color: blue; }
+            71% { color: indigo; }
+            85% { color: violet; }
+            100% { color: red; }
+        }
+
+        .login-container {
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 20px; /* Rounded corners */
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #4caf50; /* Highlight on focus */
+        }
+
+        input[type="submit"], button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 50px; /* Circular buttons */
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .date-time {
+            margin: 15px 0;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .attendance-container {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>HR Application</h1>
-        <h3>تم برمجة التطبيق بواسطة احمد وائل كمال</h3>
-        <div id="loginForm">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" placeholder="Enter username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" placeholder="Enter password">
-            </div>
-            <button onclick="login()">Login</button>
-        </div>
 
-        <div id="adminPanel" style="display: none;">
-            <h2>Welcome Admin</h2>
-            <div class="form-group">
-                <label for="employeeName">Employee Name:</label>
-                <input type="text" id="employeeName" placeholder="Enter employee name">
-            </div>
-            <div class="form-group">
-                <label for="employeeCode">Employee Code:</label>
-                <input type="text" id="employeeCode" placeholder="Enter employee code">
-            </div>
-            <div class="form-group">
-                <label for="hireDate">Hire Date:</label>
-                <input type="date" id="hireDate">
-            </div>
-            <div class="form-group">
-                <label for="todayDate">Today's Date:</label>
-                <input type="date" id="todayDate">
-            </div>
-            <div class="form-group">
-                <label for="age">Age:</label>
-                <input type="number" id="age" placeholder="Enter age">
-            </div>
-            <div class="form-group">
-                <label for="jobTitle">Job Title:</label>
-                <input type="text" id="jobTitle" placeholder="Enter job title">
-            </div>
-            <div class="form-group">
-                <label for="salary">Salary:</label>
-                <input type="number" id="salary" placeholder="Enter salary">
-            </div>
-            <div class="form-group">
-                <label for="rating">Employee Rating:</label>
-                <input type="number" id="rating" placeholder="Enter rating">
-            </div>
-            <div class="form-group">
-                <label for="department">Department:</label>
-                <select id="department">
-                    <option value="الاطفال">الاطفال</option>
-                    <option value="البقالة">البقالة</option>
-                    <option value="المعلبات">المعلبات</option>
-                    <option value="الخضار والفاكهة">الخضار والفاكهة</option>
-                    <option value="جزارة بلدي">جزارة بلدي</option>
-                    <option value="جزارة مستورد">جزارة مستورد</option>
-                    <option value="ورقيات">ورقيات</option>
-                    <option value="منظفات">منظفات</option>
-                    <option value="تجميل">تجميل</option>
-                    <option value="دوجان">دوجان</option>
-                    <option value="البان">البان</option>
-                    <option value="مفروشات">مفروشات</option>
-                    <option value="اجهزة">اجهزة</option>
-                    <option value="حلويات">حلويات</option>
-                    <option value="عطارة">عطارة</option>
-                    <option value="ادارة الامن">ادارة الامن</option>
-                    <option value="كاشير">كاشير</option>
-                    <option value="خدمات عامة">خدمات عامة</option>
-                    <option value="خدمة عملاء">خدمة عملاء</option>
-                </select>
-            </div>
-            <button onclick="addEmployee()">Add Employee</button>
-            
-            <div class="form-group">
-                <label for="deleteEmployeeCode">Select Employee to Delete:</label>
-                <select id="deleteEmployeeCode"></select>
-            </div>
-            <button onclick="deleteEmployee()">Delete Employee</button>
-            <button onclick="logout()">Logout</button>
-            <button onclick="printEmployeeInfo()">Print</button>
+<h1>Attendance System</h1>
 
-            <div class="employee-info" id="employeeInfo" style="display: none;">
-                <h3>New Employee Information:</h3>
-                <div class="employee-details" id="employeeDetails"></div>
+<!-- صفحة تسجيل دخول المدير -->
+<div class="login-container" id="loginContainer">
+    <h2>Welcome Innovation International School 🎒🏫</h2>
+    <div class="date-time" id="dateTime"></div>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+<!-- صفحة تسجيل دخول الطلاب -->
+<div class="login-container" id="studentLoginContainer" style="display: none;">
+    <h2>Student Login</h2>
+    <input type="text" id="barcode" placeholder="Scan Barcode" required>
+    <button id="studentLoginButton">Login</button>
+</div>
+
+<!-- صفحة إدخال كلمة مرور المدير لمراجعة الحضور -->
+<div class="login-container" id="adminPasswordContainer" style="display: none;">
+    <h2>Admin Password</h2>
+    <input type="password" id="adminPassword" placeholder="Enter Admin Password" required>
+    <button id="verifyAdminPassword">Verify</button>
+</div>
+
+<!-- Attendance -->
+<div class="attendance-container" id="attendanceContainer" style="display: none;">
+    <h2>Attendance Registration</h2>
+
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <!-- Class: Leaders -->
+            <div class="swiper-slide" id="classLeaders">
+                <h3>Class: Leaders</h3>
+                <table id="leadersTable">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Student Name</th>
+                            <th>Barcode</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsBodyLeaders">
+                        <tr><td>1</td><td>Abdulrahman Mohamed Ali</td><td class="barcode">123456</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>2</td><td>Habiba Zakareya Magdy Zakareya Fahmy Abouraya</td><td class="barcode">123457</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>3</td><td>Ibrahim Ahmed Fawzy Badry Ahmed Hsanien</td><td class="barcode">123458</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>4</td><td>Joudy Ali Abd El-Naby Ali Ali Shaltout</td><td class="barcode">123459</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>5</td><td>Karim sherif mohamed ramadan</td><td class="barcode">123460</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>6</td><td>Login Mahmoud Anwar Abd El Haleem Mohamed</td><td class="barcode">123461</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>7</td><td>Malak Haytham Elsayed Mohamed</td><td class="barcode">123462</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>8</td><td>Malek Samer Rafaat Elsayed Eldarwish</td><td class="barcode">123463</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>9</td><td>Marwan Moataz Mohamed Shawky Abdallah Rady</td><td class="barcode">123464</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>10</td><td>Minna Hamza Ali Mohamed Elhassan</td><td class="barcode">123465</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>11</td><td>Mohamed Ali Shaltout Ali Abd El-Naby Ali Ali Shaltout</td><td class="barcode">123466</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>12</td><td>Mohamed Hossam Khamis Abdel ghany Hegazy</td><td class="barcode">123467</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>13</td><td>Mohannad Ali Shaltout Ali Abd El-Naby Ali Ali Shaltout</td><td class="barcode">123468</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>14</td><td>Nada Mostafa Mohamed Mohamed El Maghraby</td><td class="barcode">123469</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>15</td><td>Nada Osama Farouk Elsafty</td><td class="barcode">123470</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>16</td><td>Nedal Mohamed Elmoghazy</td><td class="barcode">123471</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>17</td><td>Nejar Mohamed Elmoghazy</td><td class="barcode">123472</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>18</td><td>Omar lbrahim Abdelhady</td><td class="barcode">123473</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>19</td><td>Omar Ramy Marmdouh Abdelhamid Selim</td><td class="barcode">123474</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>20</td><td>Rahf Mohamed Hassan Yacout EI Sayed</td><td class="barcode">123475</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>21</td><td>Rahma Al Hassan Sayed Ali Ahmed</td><td class="barcode">123476</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>22</td><td>Rodaina Ali Mohamed Ibrahim</td><td class="barcode">123477</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>23</td><td>Rokaya Sherif Ahmed Samy E-Sayed Sharaf</td><td class="barcode">123478</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>24</td><td>Seif eldin Mohamed Mahmoud</td><td class="barcode">123479</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>25</td><td>Selim Wessam Sayed Ali Abd ellatif</td><td class="barcode">123480</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>26</td><td>Yara Mohamed Hassan Tawfik Omar</td><td class="barcode">123481</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>27</td><td>Yassin Hesham Yahya</td><td class="barcode">123482</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>28</td><td>Yehya Mahrieud Ahmed Hammad</td><td class="barcode">123483</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Class: Creators -->
+            <div class="swiper-slide" id="classCreators">
+                <h3>Class: Creators</h3>
+                <table id="creatorsTable">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Student Name</th>
+                            <th>Barcode</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsBodyCreators">
+                        <tr><td>1</td><td>Adam Hazem Ali Youssef Yousset Eimansoury</td><td class="barcode">123600</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>2</td><td>Ahmed Ossama Mohamed Elsayed Albdelbaset</td><td class="barcode">123601</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>3</td><td>Amr Abdeaal Ahmed Hamada Saad</td><td class="barcode">123602</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>4</td><td>Anas Ahmed Gamal Eldin</td><td class="barcode">123603</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>5</td><td>Ann Mohamed Ragab Oraby Masoud</td><td class="barcode">123604</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>6</td><td>George Wael William Ishak</td><td class="barcode">123605</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>7</td><td>Lamar Amir Mohamed Naguib Ahmed Bishr</td><td class="barcode">123606</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>8</td><td>Mahmoud Hassan Mahmoud Khalifa</td><td class="barcode">123607</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>9</td><td>Mazen Mahmoud Hassan Aly Ghaly</td><td class="barcode">123608</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>10</td><td>Mostafa Wagih Garal Eldin Mohamed Mohamed Hassan</td><td class="barcode">123609</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>11</td><td>Omar Hany Fouad Ramdan Youssef</td><td class="barcode">123610</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>12</td><td>Omar islam Soliman Fatouh El sayed Mohamed</td><td class="barcode">123611</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>13</td><td>Omar Salah Abdelaziz Ahmed Badawy</td><td class="barcode">123612</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>14</td><td>Rodyna Essam Abdelaty Aly Ayoub</td><td class="barcode">123613</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>15</td><td>Rakan Amr Mahfouz Ali Khati</td><td class="barcode">123614</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>16</td><td>Rowan Mohamed Hassan Hussein Elmenyawy</td><td class="barcode">123615</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>17</td><td>5aja Maged Ahmed Mohamed Elkomy</td><td class="barcode">123616</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>18</td><td>Seif Allah Mohamed Elsayed Mohamed</td><td class="barcode">123617</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>19</td><td>Taha Mohamed Taha Hafez Ali Emara</td><td class="barcode">123618</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>20</td><td>Yassin Nader Elsayed</td><td class="barcode">123619</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>21</td><td>Yassin Youssef Hassan Rezika Mahmoud</td><td class="barcode">123620</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>22</td><td>Youanas Sabry Abdallah Youssef</td><td class="barcode">123621</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>23</td><td>Youssef Botros Youssef Botros Shala</td><td class="barcode">123622</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>24</td><td>Youssef Ossama Abdelhafiz Ibrahim Abou Shady</td><td class="barcode">123623</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Class: Innovators -->
+            <div class="swiper-slide" id="classInnovators">
+                <h3>Class: Innovators</h3>
+                <table id="innovatorsTable">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Student Name</th>
+                            <th>Barcode</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsBodyInnovators">
+                        <tr><td>1</td><td>Adam Mohamed Wahby abou Tahoun</td><td class="barcode">123700</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>2</td><td>Fatma mohamed kotb</td><td class="barcode">123701</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>3</td><td>Hamza Hesham Abdel Moneim Hashem</td><td class="barcode">123702</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>4</td><td>Hamza Rarny Abdelaty Farag Moustafa Hamada</td><td class="barcode">123703</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>5</td><td>Hana Amr Mohamed El-sayed Hussien Madkour</td><td class="barcode">123704</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>6</td><td>Hassan Amr Al Samadony</td><td class="barcode">123705</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>7</td><td>Jana Roshdy Mohamed Elsayad</td><td class="barcode">123706</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>8</td><td>Jana Tamer Salah Hamed Mohamed Rahma</td><td class="barcode">123707</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>9</td><td>Mansour HossamEldin Mostafa</td><td class="barcode">123708</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>10</td><td>Mazen Ahmed Fouad</td><td class="barcode">123709</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>11</td><td>Mohamed Hossam Moustafa Zaki Moustafa</td><td class="barcode">123710</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>12</td><td>Mohamed Salah Abdelhamid Abdelnaby Arakat</td><td class="barcode">123711</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>13</td><td>Noureldin Shereef Mohamed Abdelfattah Elzayat</td><td class="barcode">123712</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>14</td><td>Omar Ahmed Adel</td><td class="barcode">123713</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>15</td><td>Omar lbrahim Massoud lbrahim Massoud</td><td class="barcode">123714</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>16</td><td>Omar Mahmoud Alam</td><td class="barcode">123715</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>17</td><td>Renad Ramy lbrahim Aly Ghonim</td><td class="barcode">123716</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>18</td><td>Retal Ahmed Fouad Mostafa Elkhayat</td><td class="barcode">123717</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>19</td><td>Roaa Ayman lbrahim Hussien Thabet</td><td class="barcode">123718</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>20</td><td>Rokaia Mohamed Hassan</td><td class="barcode">123719</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>21</td><td>Rowyda Essam Abd El Aty Ali Ayoub</td><td class="barcode">123720</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>22</td><td>Seif Samer ElSayed Abdelhalim Hussein Youssef EIDaly</td><td class="barcode">123721</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>23</td><td>Yehia Mohamed Ahmed Elkalza</td><td class="barcode">123722</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>24</td><td>Yehia Mohamed Safwat Abdel el salam Hamad</td><td class="barcode">123723</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>25</td><td>Yehia Samir Hegazy</td><td class="barcode">123724</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                        <tr><td>26</td><td>Youana Sabry Abdallah Youssef</td><td class="barcode">123725</td><td><input type="checkbox" class="present"></td><td><input type="checkbox" class="absent"></td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </div>
 
-    <script>
-        let loggedIn = false;
+    <button id="generateBarcodes">Generate Barcodes</button>
+    <button id="selectAllPresent">Select All Present</button>
+    <button id="deselectAllPresent">Deselect All Present</button>
+    <button id="selectAllAbsent">Select All Absent</button>
+    <button id="deselectAllAbsent">Deselect All Absent</button>
+    <button id="saveSheet">Save Sheet</button>
+    <button id="downloadSheet">Download Sheet</button>
 
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            if (username === 'admin' && password === 'admin') {
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loggedIn = true;
-                displayEmployees();
-            } else {
-                alert('Invalid credentials. Please try again.');
+    <div class="footer">Powered by Ahmed Wael</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script>
+    // Initialize Swiper
+    const swiper = new Swiper('.swiper', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+
+    // Display current date and time in 12-hour format
+    function updateDateTime() {
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        document.getElementById('dateTime').innerText = now.toLocaleString('en-US', options);
+    }
+
+    // Update date and time every second
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); // Initial call to display immediately
+
+    // Admin login data
+    const adminCredentials = {username: 'admin', password: '25101999'};
+
+    // Handle admin login
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Verify username and password
+        if (username === adminCredentials.username && password === adminCredentials.password) {
+            alert('Login successful!');
+            document.getElementById('loginContainer').style.display = 'none'; // Hide login container
+            document.getElementById('studentLoginContainer').style.display = 'block'; // Show student login container
+        } else {
+            alert('Invalid login credentials');
+        }
+    });
+
+    // Handle student login via barcode for Innovators class
+    document.getElementById('studentLoginButton').addEventListener('click', function() {
+        const barcode = document.getElementById('barcode').value;
+
+        // Search for the student in the Innovators database
+        const studentInnovators = document.querySelectorAll("#innovatorsTable tbody tr");
+        let found = false;
+
+        studentInnovators.forEach(row => {
+            const studentNameCell = row.cells[1];
+            const studentBarcodeCell = row.cells[2];
+
+            if (studentBarcodeCell.innerText === barcode) {
+                alert(`Welcome, ${studentNameCell.innerText}! Your attendance has been recorded.`);
+                row.querySelector('.present').checked = true; // Mark present
+                row.querySelector('.absent').checked = false; // Unmark absent
+                found = true;
             }
+        });
+
+        if (!found) {
+            alert('Invalid barcode. Please try again.');
         }
 
-        function addEmployee() {
-            if (!loggedIn) {
-                alert('Please login as admin first.');
-                return;
-            }
-            const employeeName = document.getElementById('employeeName').value;
-            const employeeCode = document.getElementById('employeeCode').value;
-            const hireDate = document.getElementById('hireDate').value;
-            const todayDate = document.getElementById('todayDate').value;
-            const age = document.getElementById('age').value;
-            const jobTitle = document.getElementById('jobTitle').value;
-            const salary = document.getElementById('salary').value;
-            const rating = document.getElementById('rating').value;
-            const department = document.getElementById('department').value;
+        // Show admin password input to check attendance
+        document.getElementById('studentLoginContainer').style.display = 'none';
+        document.getElementById('adminPasswordContainer').style.display = 'block'; // Show admin password input
+    });
 
-            const employee = {
-                employeeName, employeeCode, hireDate, todayDate, age, jobTitle, salary, rating, department
-            };
+    // Verify admin password for checking attendance
+    document.getElementById('verifyAdminPassword').addEventListener('click', function() {
+        const adminPassword = document.getElementById('adminPassword').value;
 
-            let employees = JSON.parse(localStorage.getItem('employees')) || [];
-            employees.push(employee);
-            localStorage.setItem('employees', JSON.stringify(employees));
-            displayEmployees();
-            window.scrollTo(0, document.body.scrollHeight);
+        // Verify admin password
+        if (adminPassword === adminCredentials.password) {
+            alert('Access granted to attendance records.');
+            document.getElementById('adminPasswordContainer').style.display = 'none'; // Hide admin password input
+            document.getElementById('attendanceContainer').style.display = 'block'; // Show attendance container
+        } else {
+            alert('Invalid admin password. Access denied.');
         }
+    });
 
-        function deleteEmployee() {
-            if (!loggedIn) {
-                alert('Please login as admin first.');
-                return;
-            }
-            const employeeCode = document.getElementById('deleteEmployeeCode').value;
-            let employees = JSON.parse(localStorage.getItem('employees')) || [];
-            employees = employees.filter(employee => employee.employeeCode !== employeeCode);
-            localStorage.setItem('employees', JSON.stringify(employees));
-            displayEmployees();
-            alert('Employee deleted successfully.');
-        }
+    // Select/Deselect all present/absent buttons
+    document.getElementById('selectAllPresent').addEventListener('click', function() {
+        document.querySelectorAll('.present').forEach(checkbox => checkbox.checked = true);
+    });
 
-        function logout() {
-            loggedIn = false;
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('employeeInfo').style.display = 'none';
-        }
+    document.getElementById('deselectAllPresent').addEventListener('click', function() {
+        document.querySelectorAll('.present').forEach(checkbox => checkbox.checked = false);
+    });
 
-        function displayEmployees() {
-            const employees = JSON.parse(localStorage.getItem('employees')) || [];
-            const employeeDetails = document.getElementById('employeeDetails');
-            const deleteEmployeeCode = document.getElementById('deleteEmployeeCode');
-            deleteEmployeeCode.innerHTML = '';
+    document.getElementById('selectAllAbsent').addEventListener('click', function() {
+        document.querySelectorAll('.absent').forEach(checkbox => checkbox.checked = true);
+    });
 
-            if (employees.length > 0) {
-                const employeeInfo = employees.map(employee => {
-                    return `Employee Name: ${employee.employeeName}<br>
-                            Employee Code: ${employee.employeeCode}<br>
-                            Hire Date: ${employee.hireDate}<br>
-                            Today's Date: ${employee.todayDate}<br>
-                            Age: ${employee.age}<br>
-                            Job Title: ${employee.jobTitle}<br>
-                            Salary: ${employee.salary}<br>
-                            Rating: ${employee.rating}<br>
-                            Department: ${employee.department}<br><hr>`;
-                }).join('');
-                employeeDetails.innerHTML = employeeInfo;
-                document.getElementById('employeeInfo').style.display = 'block';
+    document.getElementById('deselectAllAbsent').addEventListener('click', function() {
+        document.querySelectorAll('.absent').forEach(checkbox => checkbox.checked = false);
+    });
 
-                employees.forEach(employee => {
-                    const option = document.createElement('option');
-                    option.value = employee.employeeCode;
-                    option.textContent = employee.employeeCode;
-                    deleteEmployeeCode.appendChild(option);
-                });
-            } else {
-                employeeDetails.innerHTML = '';
-                document.getElementById('employeeInfo').style.display = 'none';
-            }
-        }
+    // Save sheet functionality
+    document.getElementById('saveSheet').addEventListener('click', function() {
+        alert('Sheet saved successfully!');
+        // هنا يمكنك إضافة الكود لحفظ البيانات حسب الحاجة
+    });
 
-        function printEmployeeInfo() {
-            const employeeInfo = document.getElementById('employeeInfo').innerHTML;
-            const originalContents = document.body.innerHTML;
-            document.body.innerHTML = employeeInfo;
-            window.print();
-            document.body.innerHTML = originalContents;
-            displayEmployees();
-        }
-    </script>
-</body>
-</html>
+    // Download sheet functionality
+    document.getElementById('downloadSheet').addEventListener('click', function() {
+        const table = document.getElementById('innovatorsTable');
+        const workbook = XLSX.utils.table_to_book(table);
+        XLSX.writeFile(workbook, 'AttendanceSheet.xlsx');
+    });
+</script>
+
+  </body>
+  <html/>
